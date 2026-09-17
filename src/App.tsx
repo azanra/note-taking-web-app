@@ -1,5 +1,5 @@
 import "./App.css";
-import NoteProvider from "./shared/hooks/NoteContext";
+import NoteProvider from "./shared/hooks/noteContext";
 
 function App() {
   return (
