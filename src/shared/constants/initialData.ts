@@ -1,5 +1,6 @@
 const INITIAL_DATA = [
   {
+    id: 0,
     title: "React Performance Optimization",
     tags: ["Dev", "React"],
     content:
@@ -8,6 +9,7 @@ const INITIAL_DATA = [
     isArchived: false,
   },
   {
+    id: 1,
     title: "Japan Travel Planning",
     tags: ["Travel", "Personal"],
     content:
@@ -16,6 +18,7 @@ const INITIAL_DATA = [
     isArchived: false,
   },
   {
+    id: 2,
     title: "Favorite Pasta Recipes",
     tags: ["Cooking", "Recipes"],
     content:
@@ -24,6 +27,7 @@ const INITIAL_DATA = [
     isArchived: false,
   },
   {
+    id: 3,
     title: "TypeScript Migration Guide",
     tags: ["Dev", "React", "TypeScript"],
     content:
@@ -32,6 +36,7 @@ const INITIAL_DATA = [
     isArchived: true,
   },
   {
+    id: 4,
     title: "Weekly Workout Plan",
     tags: ["Fitness", "Health"],
     content:
@@ -40,6 +45,7 @@ const INITIAL_DATA = [
     isArchived: false,
   },
   {
+    id: 5,
     title: "Gift Ideas",
     tags: ["Personal", "Shopping"],
     content:
@@ -48,6 +54,7 @@ const INITIAL_DATA = [
     isArchived: true,
   },
   {
+    id: 6,
     title: "React Component Library",
     tags: ["Dev", "React"],
     content:
@@ -56,6 +63,7 @@ const INITIAL_DATA = [
     isArchived: true,
   },
   {
+    id: 7,
     title: "Meal Prep Ideas",
     tags: ["Cooking", "Health", "Recipes"],
     content:
@@ -64,6 +72,7 @@ const INITIAL_DATA = [
     isArchived: false,
   },
   {
+    id: 8,
     title: "Reading List",
     tags: ["Personal", "Dev"],
     content:
@@ -72,6 +81,7 @@ const INITIAL_DATA = [
     isArchived: false,
   },
   {
+    id: 9,
     title: "Fitness Goals 2025",
     tags: ["Fitness", "Health", "Personal"],
     content:

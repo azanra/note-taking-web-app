@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 
 export interface INoteInterface {
+  id: number;
   title: string;
   tags: string[];
   content: string;
