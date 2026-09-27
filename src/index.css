@@ -1,3 +1,43 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --breakpoint-xxl: 90rem;
+}
+
+:root {
+  --color-blue-500: #335cff;
+
+  --color-neutral-950: #0e121b;
+  --color-neutral-700: #2b303b;
+  --color-neutral-200: #e0e4ea;
+  --color-neutral-0: #ffffff;
+
+  --radius-8: 8px;
+  --radius-4: 4px;
+}
+
+.text-preset-1 {
+  font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.5px;
+}
+
+.text-preset-3 {
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: -0.3px;
+}
+
+.text-preset-4 {
+  font-size: 14px;
+  line-height: 120%;
+  letter-spacing: -0.2px;
+}
+
+.text-preset-6 {
+  font-size: 12px;
+  line-height: 120%;
+  letter-spacing: -0.2px;
+}

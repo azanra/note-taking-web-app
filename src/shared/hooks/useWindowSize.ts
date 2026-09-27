@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import WINDOW_CONST from "../constants/windowConst";
 
 const useWindowSize = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -15,7 +16,7 @@ const useWindowSize = () => {
   }, []);
 
   return {
-    width,
+    isDesktop: width >= WINDOW_CONST.desktop,
   };
 };
 

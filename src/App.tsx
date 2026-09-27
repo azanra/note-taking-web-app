@@ -1,10 +1,11 @@
 import "./App.css";
+import Home from "./pages/home/Home";
 import NoteProvider from "./shared/hooks/noteContext";
 
 function App() {
   return (
     <NoteProvider>
-      <p className="text-3xl font-bold underline">Hello World!</p>;
+      <Home />
     </NoteProvider>
   );
 }
