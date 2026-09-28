@@ -1,6 +1,6 @@
 import type { INoteInterface } from "../../../shared/interfaces/NoteInterface";
 
-const NoteItem = ({ note }: { note: INoteInterface }) => {
+const NoteChip = ({ note }: { note: INoteInterface }) => {
   const { title, tags, lastEdited } = note;
 
   return (
@@ -23,4 +23,4 @@ const NoteItem = ({ note }: { note: INoteInterface }) => {
   );
 };
 
-export default NoteItem;
+export default NoteChip;
