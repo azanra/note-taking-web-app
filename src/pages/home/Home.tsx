@@ -1,9 +1,9 @@
-import NotesList from "./components/NotesList";
+import { Outlet } from "react-router";
 
 const Home = () => {
   return (
     <div>
-      <NotesList />
+      <Outlet />
     </div>
   );
 };

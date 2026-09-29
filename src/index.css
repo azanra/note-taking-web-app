@@ -11,7 +11,10 @@
 
   --color-neutral-950: #0e121b;
   --color-neutral-700: #2b303b;
+  --color-neutral-600: #525866;
+  --color-neutral-400: #99a0ae;
   --color-neutral-200: #e0e4ea;
+  --color-neutral-100: #f3f5f8;
   --color-neutral-0: #ffffff;
 
   --radius-8: 8px;
@@ -20,6 +23,12 @@
 
 .text-preset-1 {
   font-size: 24px;
+  line-height: 120%;
+  letter-spacing: -0.5px;
+}
+
+.text-preset-2 {
+  font-size: 20px;
   line-height: 120%;
   letter-spacing: -0.5px;
 }

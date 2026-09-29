@@ -1,12 +1,14 @@
+import type React from "react";
 import "./App.css";
-import Home from "./pages/home/Home";
-import NoteProvider from "./shared/hooks/noteContext";
 
-function App() {
+import NoteProvider from "./shared/hooks/noteContext";
+import ThemeProvider from "./shared/hooks/useTheme";
+
+function App({ children }: { children: React.ReactNode }) {
   return (
-    <NoteProvider>
-      <Home />
-    </NoteProvider>
+    <ThemeProvider>
+      <NoteProvider>{children}</NoteProvider>
+    </ThemeProvider>
   );
 }
 
