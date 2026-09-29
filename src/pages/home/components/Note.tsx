@@ -33,16 +33,14 @@ const Note = () => {
     }
 
     setNotes(
-      notes.map((note) => {
-        if (note.id === currentNote.id) {
-          return {
-            ...currentNote,
-            lastEdited: new Date().toString(),
-          };
-        }
-
-        return note;
-      }),
+      notes.map((note) =>
+        note.id === currentNote.id
+          ? {
+              ...currentNote,
+              lastEdited: new Date().toString(),
+            }
+          : note,
+      ),
     );
   };
 
