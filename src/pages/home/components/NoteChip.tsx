@@ -1,11 +1,17 @@
+import { useNavigate } from "react-router";
 import type { INoteInterface } from "../../../shared/interfaces/NoteInterface";
 
 const NoteChip = ({ note }: { note: INoteInterface }) => {
+  const navigate = useNavigate();
+
   const { title, tags, lastEdited } = note;
 
   return (
-    <section className="flex flex-col gap-[12px] p-[8px]">
-      <h2 className="text-preset-3 font-semibold text-(--color-neutral-950)">
+    <button
+      onClick={() => void navigate("new-note", { state: note })}
+      className="flex flex-col gap-[12px] p-[8px]"
+    >
+      <h2 className="text-start text-preset-3 font-semibold text-(--color-neutral-950)">
         {title}
       </h2>
       <div className="flex items-center gap-[4px]">
@@ -18,8 +24,10 @@ const NoteChip = ({ note }: { note: INoteInterface }) => {
           </span>
         ))}
       </div>
-      <p className="text-preset-6 text-(--color-neutral-700)">{lastEdited}</p>
-    </section>
+      <p className="text-start text-preset-6 text-(--color-neutral-700)">
+        {lastEdited}
+      </p>
+    </button>
   );
 };
 

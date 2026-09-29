@@ -1,3 +1,12 @@
+export const EMPTY_DATA = {
+  id: 0,
+  title: "",
+  tags: [""],
+  content: "",
+  lastEdited: "",
+  isArchived: false,
+};
+
 const INITIAL_DATA = [
   {
     id: 0,
