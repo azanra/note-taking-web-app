@@ -44,6 +44,10 @@ const Note = () => {
     );
   };
 
+  const handleCancel = () => {
+    setCurrentNote(state ?? EMPTY_DATA);
+  };
+
   return (
     <section className="px-[16px] py-[20px] flex flex-col gap-[12px] md:px-[32px] md:gap-[16px] xxl:px-[24px]">
       {!isDesktop && (
@@ -52,6 +56,7 @@ const Note = () => {
             handleAddNote();
             void navigate("/");
           }}
+          handleCancel={handleCancel}
         />
       )}
 
@@ -123,7 +128,12 @@ const Note = () => {
             >
               Save Note
             </button>
-            <button className="bg-(--color-neutral-100) px-[16px] py-[12px] rounded-(--radius-8) text-(--color-neutral-600) w-[78px] h-[41px]">
+            <button
+              onClick={() => {
+                handleCancel();
+              }}
+              className="bg-(--color-neutral-100) px-[16px] py-[12px] rounded-(--radius-8) text-(--color-neutral-600) w-[78px] h-[41px]"
+            >
               Cancel
             </button>
           </div>
@@ -133,7 +143,13 @@ const Note = () => {
   );
 };
 
-const NoteHeader = ({ handleAddNote }: { handleAddNote: () => void }) => {
+const NoteHeader = ({
+  handleAddNote,
+  handleCancel,
+}: {
+  handleAddNote: () => void;
+  handleCancel: () => void;
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -149,7 +165,14 @@ const NoteHeader = ({ handleAddNote }: { handleAddNote: () => void }) => {
       </button>
 
       <div className="flex gap-[16px] text-preset-4">
-        <button className="text-(--color-neutral-600)">Cancel</button>
+        <button
+          onClick={() => {
+            handleCancel();
+          }}
+          className="text-(--color-neutral-600)"
+        >
+          Cancel
+        </button>
         <button
           onClick={() => {
             handleAddNote();
