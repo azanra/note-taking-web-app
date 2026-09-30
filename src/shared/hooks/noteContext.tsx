@@ -7,7 +7,47 @@ import { NoteContext } from "../hooks/useNote";
 const NoteProvider = ({ children }: { children: React.ReactNode }) => {
   const [notes, setNotes] = useState<INoteInterface[]>(INITIAL_DATA);
 
-  return <NoteContext value={{ notes, setNotes }}>{children}</NoteContext>;
+  const handleAddNote = (
+    state: INoteInterface | undefined,
+    currentNote: INoteInterface,
+  ) => {
+    if (!state) {
+      setNotes([
+        ...notes,
+        {
+          ...currentNote,
+          lastEdited: new Date().toString(),
+          id: notes[notes.length - 1].id + 1,
+        },
+      ]);
+      return;
+    }
+
+    setNotes(
+      notes.map((note) =>
+        note.id === currentNote.id
+          ? {
+              ...currentNote,
+              lastEdited: new Date().toString(),
+            }
+          : note,
+      ),
+    );
+  };
+
+  const handleArchiveNote = (noteId: number, isArchived: boolean) => {
+    setNotes(
+      notes.map((note) =>
+        note.id === noteId ? { ...note, isArchived } : note,
+      ),
+    );
+  };
+
+  return (
+    <NoteContext value={{ notes, setNotes, handleAddNote, handleArchiveNote }}>
+      {children}
+    </NoteContext>
+  );
 };
 
 export default NoteProvider;

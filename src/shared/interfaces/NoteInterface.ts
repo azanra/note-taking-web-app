@@ -12,4 +12,9 @@ export interface INoteInterface {
 export interface INoteContext {
   notes: INoteInterface[];
   setNotes: Dispatch<SetStateAction<INoteInterface[]>>;
+  handleAddNote: (
+    state: INoteInterface | undefined,
+    currentNote: INoteInterface,
+  ) => void;
+  handleArchiveNote: (noteId: number, isArchived: boolean) => void;
 }

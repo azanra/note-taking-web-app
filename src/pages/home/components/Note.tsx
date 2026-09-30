@@ -7,42 +7,19 @@ import useWindowSize from "../../../shared/hooks/useWindowSize";
 import { useState } from "react";
 import { EMPTY_DATA } from "../../../shared/constants/initialData";
 import { useNotes } from "../../../shared/hooks/useNote";
+import IconArchive from "../../../assets/images/icon-archive.svg?react";
+import IconRestore from "../../../assets/images/icon-restore.svg?react";
 
 const Note = () => {
   const location = useLocation();
   const state = location.state as INoteInterface | undefined;
 
   const [currentNote, setCurrentNote] = useState(state ?? EMPTY_DATA);
-  const { notes, setNotes } = useNotes();
+
+  const { handleAddNote } = useNotes();
   const { isDesktop } = useWindowSize();
-  const navigate = useNavigate();
 
   const { title, tags, content, lastEdited } = currentNote;
-
-  const handleAddNote = () => {
-    if (!state) {
-      setNotes([
-        ...notes,
-        {
-          ...currentNote,
-          lastEdited: new Date().toString(),
-          id: notes[notes.length - 1].id + 1,
-        },
-      ]);
-      return;
-    }
-
-    setNotes(
-      notes.map((note) =>
-        note.id === currentNote.id
-          ? {
-              ...currentNote,
-              lastEdited: new Date().toString(),
-            }
-          : note,
-      ),
-    );
-  };
 
   const handleCancel = () => {
     setCurrentNote(state ?? EMPTY_DATA);
@@ -51,13 +28,7 @@ const Note = () => {
   return (
     <section className="px-[16px] py-[20px] flex flex-col gap-[12px] md:px-[32px] md:gap-[16px] xxl:px-[24px]">
       {!isDesktop && (
-        <NoteHeader
-          handleAddNote={() => {
-            handleAddNote();
-            void navigate("/");
-          }}
-          handleCancel={handleCancel}
-        />
+        <NoteHeader currentNote={currentNote} handleCancel={handleCancel} />
       )}
 
       <main className="flex flex-col gap-[12px] md:gap-[16px]">
@@ -122,7 +93,7 @@ const Note = () => {
           <div className="flex gap-[16px] text-preset-4">
             <button
               onClick={() => {
-                handleAddNote();
+                handleAddNote(state, currentNote);
               }}
               className="bg-(--color-blue-500) px-[16px] py-[12px] rounded-(--radius-8) text-(--color-neutral-0) w-[99px] h-[41px]"
             >
@@ -144,13 +115,23 @@ const Note = () => {
 };
 
 const NoteHeader = ({
-  handleAddNote,
+  currentNote,
   handleCancel,
 }: {
-  handleAddNote: () => void;
+  currentNote: INoteInterface;
   handleCancel: () => void;
 }) => {
+  const { handleAddNote, handleArchiveNote } = useNotes();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const state = location.state as INoteInterface | undefined;
+  const iconClass = "w-[18px] h-[18px]";
+
+  const handleArchive = (isArchived = false) => {
+    handleArchiveNote(currentNote.id, isArchived);
+    void navigate("/");
+  };
 
   return (
     <header className="pb-[12px] flex items-center justify-between border-b border-(--color-neutral-200)">
@@ -164,7 +145,24 @@ const NoteHeader = ({
         </span>
       </button>
 
-      <div className="flex gap-[16px] text-preset-4">
+      <div className="flex items-center gap-[16px] text-preset-4">
+        {state && !currentNote.isArchived ? (
+          <IconArchive
+            onClick={() => {
+              handleArchive(true);
+            }}
+            className={`${iconClass} *:stroke-(--color-neutral-600)`}
+          />
+        ) : (
+          state && (
+            <IconRestore
+              onClick={() => {
+                handleArchive();
+              }}
+              className={`${iconClass} *:fill-(--color-neutral-600)"`}
+            />
+          )
+        )}
         <button
           onClick={() => {
             handleCancel();
@@ -175,7 +173,8 @@ const NoteHeader = ({
         </button>
         <button
           onClick={() => {
-            handleAddNote();
+            handleAddNote(state, currentNote);
+            void navigate("/");
           }}
           className="text-(--color-blue-500)"
         >
