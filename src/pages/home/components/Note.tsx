@@ -9,6 +9,7 @@ import { EMPTY_DATA } from "../../../shared/constants/initialData";
 import { useNotes } from "../../../shared/hooks/useNote";
 import IconArchive from "../../../assets/images/icon-archive.svg?react";
 import IconRestore from "../../../assets/images/icon-restore.svg?react";
+import IconDelete from "../../../assets/images/icon-delete.svg?react";
 
 const Note = () => {
   const location = useLocation();
@@ -121,7 +122,7 @@ const NoteHeader = ({
   currentNote: INoteInterface;
   handleCancel: () => void;
 }) => {
-  const { handleAddNote, handleArchiveNote } = useNotes();
+  const { handleAddNote, handleArchiveNote, handleDeleteNote } = useNotes();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -146,23 +147,32 @@ const NoteHeader = ({
       </button>
 
       <div className="flex items-center gap-[16px] text-preset-4">
-        {state && !currentNote.isArchived ? (
-          <IconArchive
+        {state && (
+          <IconDelete
             onClick={() => {
-              handleArchive(true);
+              handleDeleteNote(currentNote.id);
+              void navigate("/");
             }}
             className={`${iconClass} *:stroke-(--color-neutral-600)`}
           />
-        ) : (
-          state && (
+        )}
+
+        {state &&
+          (!currentNote.isArchived ? (
+            <IconArchive
+              onClick={() => {
+                handleArchive(true);
+              }}
+              className={`${iconClass} *:stroke-(--color-neutral-600)`}
+            />
+          ) : (
             <IconRestore
               onClick={() => {
                 handleArchive();
               }}
               className={`${iconClass} *:fill-(--color-neutral-600)"`}
             />
-          )
-        )}
+          ))}
         <button
           onClick={() => {
             handleCancel();

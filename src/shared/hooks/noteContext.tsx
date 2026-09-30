@@ -43,8 +43,20 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
+  const handleDeleteNote = (noteId: number) => {
+    setNotes(notes.filter((note) => note.id !== noteId));
+  };
+
   return (
-    <NoteContext value={{ notes, setNotes, handleAddNote, handleArchiveNote }}>
+    <NoteContext
+      value={{
+        notes,
+        setNotes,
+        handleAddNote,
+        handleArchiveNote,
+        handleDeleteNote,
+      }}
+    >
       {children}
     </NoteContext>
   );

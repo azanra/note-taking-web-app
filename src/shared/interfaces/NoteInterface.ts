@@ -17,4 +17,5 @@ export interface INoteContext {
     currentNote: INoteInterface,
   ) => void;
   handleArchiveNote: (noteId: number, isArchived: boolean) => void;
+  handleDeleteNote: (noteId: number) => void;
 }
