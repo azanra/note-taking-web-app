@@ -1,21 +1,21 @@
 import type { INoteInterface } from "../interfaces/NoteInterface";
-import INITIAL_DATA from "../constants/initialData";
+import INITIAL_DATA, { EMPTY_DATA } from "../constants/initialData";
 import { useState } from "react";
 
 import { NoteContext } from "../hooks/useNote";
 
 const NoteProvider = ({ children }: { children: React.ReactNode }) => {
   const [notes, setNotes] = useState<INoteInterface[]>(INITIAL_DATA);
+  const [currentNote, setCurrentNote] = useState<INoteInterface>(EMPTY_DATA);
 
-  const handleAddNote = (
-    state: INoteInterface | undefined,
-    currentNote: INoteInterface,
-  ) => {
-    if (!state) {
+  const isEdit = JSON.stringify(currentNote) !== JSON.stringify(EMPTY_DATA);
+
+  const handleAddNote = (activeNote: INoteInterface) => {
+    if (!isEdit) {
       setNotes([
         ...notes,
         {
-          ...currentNote,
+          ...activeNote,
           lastEdited: new Date().toString(),
           id: notes[notes.length - 1].id + 1,
         },
@@ -25,9 +25,9 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
 
     setNotes(
       notes.map((note) =>
-        note.id === currentNote.id
+        note.id === activeNote.id
           ? {
-              ...currentNote,
+              ...activeNote,
               lastEdited: new Date().toString(),
             }
           : note,
@@ -47,6 +47,10 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
     setNotes(notes.filter((note) => note.id !== noteId));
   };
 
+  const handleCancel = () => {
+    setCurrentNote(isEdit ? currentNote : EMPTY_DATA);
+  };
+
   return (
     <NoteContext
       value={{
@@ -55,6 +59,10 @@ const NoteProvider = ({ children }: { children: React.ReactNode }) => {
         handleAddNote,
         handleArchiveNote,
         handleDeleteNote,
+        currentNote,
+        setCurrentNote,
+        handleCancel,
+        isEdit,
       }}
     >
       {children}

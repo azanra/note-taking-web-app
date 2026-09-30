@@ -1,14 +1,24 @@
 import { useNavigate } from "react-router";
 import type { INoteInterface } from "../../../shared/interfaces/NoteInterface";
+import useWindowSize from "../../../shared/hooks/useWindowSize";
+import { useNotes } from "../../../shared/hooks/useNote";
 
 const NoteChip = ({ note }: { note: INoteInterface }) => {
+  const { setCurrentNote } = useNotes();
   const navigate = useNavigate();
+  const { isDesktop } = useWindowSize();
 
   const { title, tags, lastEdited } = note;
 
   return (
     <button
-      onClick={() => void navigate("new-note", { state: note })}
+      onClick={() => {
+        setCurrentNote(note);
+
+        if (!isDesktop) {
+          void navigate("new-note");
+        }
+      }}
       className="flex flex-col gap-[12px] p-[8px]"
     >
       <h2 className="text-start text-preset-3 font-semibold text-(--color-neutral-950)">

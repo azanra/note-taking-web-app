@@ -1,36 +1,24 @@
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import IconArrowLeft from "../../../assets/images/icon-arrow-left.svg?react";
-import type { INoteInterface } from "../../../shared/interfaces/NoteInterface";
 import IconTag from "../../../assets/images/icon-tag.svg?react";
 import IconClock from "../../../assets/images/icon-clock.svg?react";
 import useWindowSize from "../../../shared/hooks/useWindowSize";
-import { useState } from "react";
-import { EMPTY_DATA } from "../../../shared/constants/initialData";
 import { useNotes } from "../../../shared/hooks/useNote";
 import IconArchive from "../../../assets/images/icon-archive.svg?react";
 import IconRestore from "../../../assets/images/icon-restore.svg?react";
 import IconDelete from "../../../assets/images/icon-delete.svg?react";
 
 const Note = () => {
-  const location = useLocation();
-  const state = location.state as INoteInterface | undefined;
+  const { currentNote } = useNotes();
 
-  const [currentNote, setCurrentNote] = useState(state ?? EMPTY_DATA);
-
-  const { handleAddNote } = useNotes();
+  const { setCurrentNote, handleAddNote, handleCancel } = useNotes();
   const { isDesktop } = useWindowSize();
 
   const { title, tags, content, lastEdited } = currentNote;
 
-  const handleCancel = () => {
-    setCurrentNote(state ?? EMPTY_DATA);
-  };
-
   return (
     <section className="px-[16px] py-[20px] flex flex-col gap-[12px] md:px-[32px] md:gap-[16px] xxl:px-[24px]">
-      {!isDesktop && (
-        <NoteHeader currentNote={currentNote} handleCancel={handleCancel} />
-      )}
+      {!isDesktop && <NoteHeader />}
 
       <main className="flex flex-col gap-[12px] md:gap-[16px]">
         <input
@@ -94,7 +82,7 @@ const Note = () => {
           <div className="flex gap-[16px] text-preset-4">
             <button
               onClick={() => {
-                handleAddNote(state, currentNote);
+                handleAddNote(currentNote);
               }}
               className="bg-(--color-blue-500) px-[16px] py-[12px] rounded-(--radius-8) text-(--color-neutral-0) w-[99px] h-[41px]"
             >
@@ -115,18 +103,18 @@ const Note = () => {
   );
 };
 
-const NoteHeader = ({
-  currentNote,
-  handleCancel,
-}: {
-  currentNote: INoteInterface;
-  handleCancel: () => void;
-}) => {
-  const { handleAddNote, handleArchiveNote, handleDeleteNote } = useNotes();
-  const navigate = useNavigate();
-  const location = useLocation();
+const NoteHeader = () => {
+  const {
+    currentNote,
+    handleAddNote,
+    handleArchiveNote,
+    handleDeleteNote,
+    handleCancel,
+    isEdit,
+  } = useNotes();
 
-  const state = location.state as INoteInterface | undefined;
+  const navigate = useNavigate();
+
   const iconClass = "w-[18px] h-[18px]";
 
   const handleArchive = (isArchived = false) => {
@@ -147,7 +135,7 @@ const NoteHeader = ({
       </button>
 
       <div className="flex items-center gap-[16px] text-preset-4">
-        {state && (
+        {isEdit && (
           <IconDelete
             onClick={() => {
               handleDeleteNote(currentNote.id);
@@ -157,7 +145,7 @@ const NoteHeader = ({
           />
         )}
 
-        {state &&
+        {isEdit &&
           (!currentNote.isArchived ? (
             <IconArchive
               onClick={() => {
@@ -183,7 +171,7 @@ const NoteHeader = ({
         </button>
         <button
           onClick={() => {
-            handleAddNote(state, currentNote);
+            handleAddNote(currentNote);
             void navigate("/");
           }}
           className="text-(--color-blue-500)"

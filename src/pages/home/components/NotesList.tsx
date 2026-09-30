@@ -6,9 +6,11 @@ import { Fragment } from "react/jsx-runtime";
 import NoteChip from "./NoteChip";
 import { useNavigate } from "react-router";
 
+import { EMPTY_DATA } from "../../../shared/constants/initialData";
+
 const NotesList = () => {
   const { isDesktop } = useWindowSize();
-  const { notes } = useNotes();
+  const { notes, setCurrentNote } = useNotes();
 
   const navigate = useNavigate();
 
@@ -37,7 +39,10 @@ const NotesList = () => {
 
       {!isDesktop && (
         <button
-          onClick={() => void navigate("new-note")}
+          onClick={() => {
+            void navigate("new-note");
+            setCurrentNote(EMPTY_DATA);
+          }}
           className="fixed bottom-[72px] md:bottom-[106px] right-[16px] md:right-[35px] bg-(--color-blue-500) rounded-[50%] w-[48px] h-[48px] md:w-[64px] md:h-[64px] flex justify-center items-center"
         >
           <IconPlus className="*:fill-(--color-neutral-50)" />
